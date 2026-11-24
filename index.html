@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0b1a2a">
+<meta name="apple-mobile-web-app-title" content="Gemi Düellosu">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>Gemi Düellosu · Prototip</title>
+<style>
+html,body{margin:0;height:100%;background:#0b1a2a;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+canvas{display:block;position:fixed;left:0;top:0;touch-action:none}
+#rot{position:fixed;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:radial-gradient(circle at 50% 40%,#1c3a57,#08131f);color:#f3e2b8;font:800 20px "Trebuchet MS",system-ui,sans-serif;text-align:center;z-index:5}
+#rot b{font-size:58px;display:block;animation:r 2s ease-in-out infinite}
+@keyframes r{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(90deg)}}
+@media (orientation:portrait){#rot{display:flex}}
+ /* Studio383 açılışı: ışık çizgisi → 383 ortada esneyerek açılır → sağa kayar → STUDIO yanından açılır → parlar → kararır. Yükleme arkada sürer; dokununca geçilir. */
+ #studio-intro{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;background:#000;overflow:hidden;--ih:min(27vh,112px,16vw);animation:si-out .45s ease-in 3.6s forwards;-webkit-tap-highlight-color:transparent}
+ #studio-intro .si-line{position:absolute;left:50%;top:50%;width:62vw;height:3px;margin:-1.5px 0 0 -31vw;border-radius:3px;background:linear-gradient(90deg,#0fb5a800,#7ff5ea 30%,#fff 50%,#ffb36b 70%,#ff7a1a00);box-shadow:0 0 18px #7ff5ea,0 0 36px #ff7a1a88;transform:scaleX(0);animation:si-line .62s cubic-bezier(.2,.8,.2,1) .08s forwards}
+ #studio-intro .si-glow{position:absolute;left:50%;top:50%;width:calc(var(--ih)*4);height:calc(var(--ih)*4);margin:calc(var(--ih)*-2) 0 0 calc(var(--ih)*-2);border-radius:50%;background:radial-gradient(circle,#ff7a1a30,#0fb5a81c 45%,#0000 70%);opacity:0;animation:si-glow 1.6s ease-out .45s forwards;pointer-events:none}
+ #studio-intro .si-row{position:relative;display:flex;align-items:center;gap:calc(var(--ih)*.1);animation:si-row-out .5s ease-in 3.3s forwards}
+ #studio-intro .si-word{height:calc(var(--ih)*.62);width:auto;opacity:0;clip-path:inset(0 0 0 100%);transform:translateX(calc(var(--ih)*-.3));animation:si-word .55s cubic-bezier(.2,.9,.25,1) 1.12s forwards,si-flash .5s ease-out 1.78s}
+ #studio-intro .si-num{height:var(--ih);width:auto;transform:translateX(calc(var(--ih)*-1.1265)) scale(0) rotate(12deg);animation:si-pop .55s cubic-bezier(.3,1.6,.45,1) .38s forwards,si-slide .42s cubic-bezier(.5,0,.2,1) .98s forwards}
+ @keyframes si-line{0%{transform:scaleX(0);opacity:1}55%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1.08) scaleY(.3);opacity:0}}
+ @keyframes si-pop{0%{transform:translateX(calc(var(--ih)*-1.1265)) scale(0) rotate(12deg)}100%{transform:translateX(calc(var(--ih)*-1.1265)) scale(1) rotate(0)}}
+ @keyframes si-slide{0%{transform:translateX(calc(var(--ih)*-1.1265)) scale(1)}60%{transform:translateX(calc(var(--ih)*.06)) scale(1.03)}100%{transform:translateX(0) scale(1)}}
+ @keyframes si-word{0%{opacity:0;clip-path:inset(0 0 0 100%);transform:translateX(calc(var(--ih)*-.3))}30%{opacity:1}100%{opacity:1;clip-path:inset(-20% 0 -20% -5%);transform:translateX(0)}}
+ @keyframes si-flash{0%,100%{filter:brightness(1)}35%{filter:brightness(1.35) drop-shadow(0 0 10px #fff8)}}
+ @keyframes si-glow{0%{opacity:0;transform:scale(.4)}40%{opacity:1}100%{opacity:.55;transform:scale(1)}}
+ @keyframes si-row-out{to{transform:scale(.94);opacity:0}}
+ @keyframes si-out{to{opacity:0;visibility:hidden}}
+ #studio-intro.si-wait,#studio-intro.si-wait *{animation-play-state:paused!important}#studio-intro.si-wait>*{visibility:hidden}
+ @media(prefers-reduced-motion:reduce){#studio-intro *{animation-duration:.01s!important;animation-delay:0s!important}#studio-intro .si-num{transform:none}#studio-intro .si-word{opacity:1;clip-path:none;transform:none}#studio-intro{animation:si-out .3s ease-in 1.4s forwards}}
+</style>
+  <script type="module" crossorigin src="./assets/index-C96YumrG.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CLkq1Llp.css">
+</head>
+<body>
+ <div id="studio-intro" class="si-wait" aria-label="Studio383" role="img"><span class="si-glow"></span><span class="si-line"></span><div class="si-row"><img class="si-word" src="./ui/studio383/studio.webp" alt="" draggable="false"><img class="si-num" src="./ui/studio383/383.webp" alt="" draggable="false"></div></div>
+ <script>(function(){var r=document.getElementById('studio-intro');if(!r)return;var skip=false;try{skip=sessionStorage.getItem('gd-skip-intro')==='1'||localStorage.getItem('gd-nointro')==='1';sessionStorage.removeItem('gd-skip-intro');}catch(e){}if(skip||/[?&]google/.test(location.search)){r.remove();return;}
+  // Açılış sesi: önce kendiliğinden çalmayı dener; telefon izin vermezse ilk dokunuşta animasyonun o anki yerinden başlar.
+  // Dokunmak açılışı GEÇMEZ (kullanıcı isteği). Ayarlarda ses efektleri kapalıysa çalmaz.
+  // Açılış: önce ekran kısa süre siyah kalır; logo görselleri ve ses yüklenince animasyon sesle birlikte baştan başlar (en çok 2,5 sn beklenir).
+  var t0=performance.now(),vol=.7;try{var st=localStorage.getItem('gd-sound');if(st==='0')vol=0;}catch(e){}
+  var url='./ui/studio383/intro.mp3',snd=new Audio(url),playing=false,started=false;snd.preload='auto';snd.volume=vol;try{snd.load();}catch(e){}
+  var tryPlay=function(fromTap){if(!begun||playing||vol<=0)return;var at=(performance.now()-t0)/1000;if(fromTap&&at>3.5)return;
+   try{if(fromTap&&at>.15)snd.currentTime=Math.max(0,at-.05);
+    var p=snd.play();if(p&&p.then)p.then(function(){playing=true;},function(){playing=false;});else playing=true;}catch(e){}};
+  var gone=false,done=function(){if(gone)return;gone=true;r.remove();window.__gdStudioDone=true;try{window.dispatchEvent(new Event('gd:studio-done'));}catch(e){}};
+  // Ses gerçekten çalmaya başlayınca (playing) animasyon başlar; ses engellenirse ya da gecikirse en çok 1,2 sn beklenir.
+  var begun=false,begin=function(){if(begun)return;begun=true;t0=performance.now();r.classList.remove('si-wait');setTimeout(done,4700);};
+  var start=function(){if(started)return;started=true;if(vol<=0){begin();return;}
+   snd.addEventListener('playing',function(){begin();},{once:true});
+   try{snd.currentTime=0;var p=snd.play();if(p&&p.then)p.then(function(){playing=true;},function(){playing=false;begin();});else playing=true;}catch(e){begin();}
+   setTimeout(begin,1200);};
+  var waits=[].slice.call(r.querySelectorAll('img')).map(function(img){return img.decode?img.decode().catch(function(){}):Promise.resolve();});
+  // Telefon açılış ekranından sonra en az 1 sn siyah: animasyonun başı kaçmasın.
+  waits.push(new Promise(function(res){setTimeout(res,1000);}));
+  if(vol>0)waits.push(new Promise(function(res){if(snd.readyState>=3)return res();snd.addEventListener('canplaythrough',res,{once:true});snd.addEventListener('loadeddata',function(){setTimeout(res,150);},{once:true});snd.addEventListener('error',res,{once:true});}));
+  Promise.all(waits).then(start);setTimeout(start,2500);
+  r.addEventListener('pointerdown',function(){tryPlay(true);});
+  r.addEventListener('animationend',function(e){if(e.target===r)done();});})();</script>
+<canvas id="c"></canvas>
+<div id="rot"><b>📱</b>Telefonu yatay çevir</div>
+</body>
+</html>

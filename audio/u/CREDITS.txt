@@ -1,0 +1,7 @@
+bomb, sizzle, fuse  - TumeniNodes / steveygos93 / theneedle.tv / frankelmedico, CC0 (minetest_game tnt mod)
+chain1-2, heal      - RPG Sound Pack (OpenGameArt, CC0)
+swish1-2            - Battle sound effects (OpenGameArt, CC0)
+crunch, harpoon     - Kenney Sci-Fi Sounds / Impact Sounds, CC0
+audio/v/*  - untouched CC0 clips: Kenney Voiceover Pack (zinc=Female power_up, ates=Male go, dede=Male hold, nisan=Male war_sniper, bomba=fire_in_the_hole, zipkin=Female war_target_engaged), RPG Sound Pack by artisticdude, OpenGameArt (koca=giant2, asci=ogre1, balik=slime1, hayalet=shade1; wav re-encoded to ogg only)
+magic.ogg = RPG Sound Pack battle/magic1.wav (artisticdude, OpenGameArt, CC0), re-encoded only
+spell.ogg = RPG Sound Pack battle/spell.wav (artisticdude, OpenGameArt, CC0), re-encoded only
